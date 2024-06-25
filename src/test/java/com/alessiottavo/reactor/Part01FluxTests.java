@@ -1,8 +1,10 @@
-package com.alessiottavo.reactive_programming_with_reactor_3;
+package com.alessiottavo.reactor;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
+import com.alessiottavo.reactor.Part01Flux;
 
 import reactor.test.StepVerifier;
 

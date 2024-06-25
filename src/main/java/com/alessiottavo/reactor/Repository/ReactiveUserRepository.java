@@ -1,4 +1,4 @@
-package com.alessiottavo.reactive_programming_with_reactor_3.Repository;
+package com.alessiottavo.reactor.Repository;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.reactivestreams.Publisher;
 
-import com.alessiottavo.reactive_programming_with_reactor_3.Repository.Entity.User;
+import com.alessiottavo.reactor.Repository.Entity.User;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

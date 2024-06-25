@@ -1,4 +1,4 @@
-package com.alessiottavo.reactive_programming_with_reactor_3;
+package com.alessiottavo.reactor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

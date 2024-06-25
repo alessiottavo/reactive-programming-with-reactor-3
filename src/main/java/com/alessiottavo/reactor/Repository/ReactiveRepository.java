@@ -1,4 +1,4 @@
-package com.alessiottavo.reactive_programming_with_reactor_3.Repository;
+package com.alessiottavo.reactor.Repository;
 
 import org.reactivestreams.Publisher;
 

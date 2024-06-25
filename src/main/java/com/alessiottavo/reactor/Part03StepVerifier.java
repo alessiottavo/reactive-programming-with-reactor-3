@@ -1,8 +1,8 @@
-package com.alessiottavo.reactive_programming_with_reactor_3;
+package com.alessiottavo.reactor;
 
 import java.util.function.Supplier;
 
-import com.alessiottavo.reactive_programming_with_reactor_3.Repository.Entity.User;
+import com.alessiottavo.reactor.Repository.Entity.User;
 
 import reactor.core.publisher.Flux;
 
