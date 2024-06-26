@@ -12,14 +12,13 @@ import com.alessiottavo.reactor.Repository.Entity.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class ReactiveUserRepository implements ReactiveRepository<User>  {
-	
+public class ReactiveUserRepository implements ReactiveRepository<User> {
+
 	private final static long DEFAULT_DELAY_IN_MS = 100;
 
 	private final long delayInMs;
 
 	private final List<User> users;
-
 
 	public ReactiveUserRepository() {
 		this(DEFAULT_DELAY_IN_MS);
@@ -56,23 +55,17 @@ public class ReactiveUserRepository implements ReactiveRepository<User>  {
 
 	@Override
 	public Mono<User> findById(String username) {
-		User user = users.stream().filter((p) -> p.getUsername().equals(username))
-				.findFirst()
+		User user = users.stream().filter((p) -> p.getUsername().equals(username)).findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("No user with username " + username + " found!"));
 		return withDelay(Mono.just(user));
 	}
 
-
 	private Mono<User> withDelay(Mono<User> userMono) {
-		return Mono
-				.delay(Duration.ofMillis(delayInMs))
-				.flatMap(c -> userMono);
+		return Mono.delay(Duration.ofMillis(delayInMs)).flatMap(c -> userMono);
 	}
 
 	private Flux<User> withDelay(Flux<User> userFlux) {
-		return Flux
-				.interval(Duration.ofMillis(delayInMs))
-				.zipWith(userFlux, (i, user) -> user);
+		return Flux.interval(Duration.ofMillis(delayInMs)).zipWith(userFlux, (i, user) -> user);
 	}
 
 }

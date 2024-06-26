@@ -2,7 +2,6 @@ package com.alessiottavo.reactor.Repository.Entity;
 
 public class User {
 
-
 	public static final User SKYLER = new User("swhite", "Skyler", "White");
 	public static final User JESSE = new User("jpinkman", "Jesse", "Pinkman");
 	public static final User WALTER = new User("wwhite", "Walter", "White");
@@ -63,10 +62,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "Person{" +
-				"username='" + username + '\'' +
-				", firstname='" + firstname + '\'' +
-				", lastname='" + lastname + '\'' +
-				'}';
+		return "Person{" + "username='" + username + '\'' + ", firstname='" + firstname + '\'' + ", lastname='"
+				+ lastname + '\'' + '}';
 	}
 }
