@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactive Programming Using Reactor 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Reactive Programming Using Reactor 3</h1>
+
+<p>These exercises have been created following the official documentation from <a href="https://projectreactor.io/">projectreactor.io</a>.</p>
+
+<p>Explore the exercises here: <a href="https://tech.io/playgrounds/929/reactive-programming-with-reactor-3/">Reactive Programming with Reactor 3</a></p>
+
+<p>Reactive programming is a new paradigm that uses declarative code, similar to functional programming, to build asynchronous processing pipelines. This event-based model pushes data to the consumer as it becomes available. Reactive programming is fully asynchronous and non-blocking.</p>
+
+<h2>Reactive Streams in JVM</h2>
+
+<p>Reactive programming in the JVM is based on Reactive Streams, which consist of four interfaces and a Technology Compatibility Kit (TCK):</p>
+
+<h3>Core Interfaces</h3>
+
+<ul>
+    <li><strong>Publisher&lt;T&gt;</strong>: Represents a data source. A <code>Publisher</code> emits a sequence of elements of type <code>T</code> to subscribers (<code>Subscriber</code>).</li>
+    <li><strong>Subscriber&lt;T&gt;</strong>: Represents a data consumer. A <code>Subscriber</code> receives data emitted by the <code>Publisher</code> and reacts to it.</li>
+    <li><strong>Subscription</strong>: Represents a link between a <code>Publisher</code> and a <code>Subscriber</code>. It manages flow control, allowing the <code>Subscriber</code> to request a specific number of elements from the <code>Publisher</code>.</li>
+    <li><strong>Processor&lt;T, R&gt;</strong>: Acts as both a <code>Publisher</code> and a <code>Subscriber</code>, capable of transforming received elements before passing them to its subscribers.</li>
+</ul>
+
+<h3>Technology Compatibility Kit (TCK)</h3>
+
+<p>The TCK is a set of tests to verify the compliance of an implementation with the Reactive Streams specifications. It ensures that different Reactive Streams implementations can interact seamlessly, maintaining predictable and correct behavior.</p>
+
+<h2>Reactor</h2>
+
+<p>To simplify the use of Reactive Streams, Reactor provides high-level APIs built on the <code>Publisher</code> interface. Reactor introduces the concept of operators, which are linked together to describe a process applied to each data state. Applying an operator returns a new intermediate <code>Publisher</code>. At the end of the pipeline, there is a final subscriber.</p>
+
+<h3>Flux</h3>
+
+<p>A <code>Flux&lt;T&gt;</code> is a <code>Publisher</code> in Reactive Streams, enhanced with many operators to orchestrate <code>Flux</code> sequences. A <code>Flux</code> can emit 0 to n elements of type <code>&lt;T&gt;</code> (onNext events) and can either complete or error out (onComplete and onError terminal events). If no terminal event triggers, the <code>Flux</code> is infinite.</p>
+
+<h4>Key Operations</h4>
+
+<ol>
+    <li><strong>Flux#subscribe()</strong>:
+        <p>Registers a subscriber to receive events from the <code>Flux</code>, starting the data flow.</p>
+    </li>
+    <li><strong>Multicasting Operations (Flux#publish, Flux#publishNext)</strong>:
+        <ul>
+            <li><strong>publish()</strong>: Shares a single subscription among multiple subscribers, transforming a hot stream into a cold one.</li>
+            <li><strong>publishNext()</strong>: Emits only the next available event to its subscribers.</li>
+        </ul>
+    </li>
+    <li><strong>Materializing a Dedicated Instance of the Pipeline</strong>:
+        <p>Each <code>subscribe()</code>, <code>publish()</code>, or <code>publishNext()</code> call creates a dedicated instance of the data processing pipeline, ensuring independent operation for each subscription or multicasted flow.</p>
+    </li>
+    <li><strong>Triggering the Data Flow</strong>:
+        <p>Once an instance is created, the data flow is activated, executing defined operations on each element of the stream.</p>
+    </li>
+</ol>
+
+<h3>Mono&lt;T&gt;</h3>
+
+<p>A <code>Mono</code> is another <code>Publisher</code> in Reactive Streams, enhanced with operators for orchestrating <code>Mono</code> sequences. It is a specialization of <code>Flux</code> that emits at most one element. A <code>Mono</code> can be valued, empty, or failed. A <code>Mono&lt;void&gt;</code> is equivalent to a completion signal. Like <code>Flux</code>, it is used to define asynchronous pipelines.</p>
+
+<h3>StepVerifier</h3>
+
+<p>StepVerifier allows subscribing to any publisher and asserting user-defined expectations. It is obtained from its static factory and requires calling <code>verify()</code> to trigger the subscription.</p>
+
+<h2>Transformations</h2>
+
+<h3>Using <code>flatMap</code></h3>
+
+<p>For asynchronous transformations, use <code>flatMap</code> which takes a transformation <code>Function</code> returning a <code>Publisher&lt;U&gt;</code>. This merges all inner publishers into a single output <code>Flux&lt;U&gt;</code>.</p>
+
+<h3>Merging Sequences</h3>
+
+<p>Merge values from several <code>Publisher</code>s into a single <code>Flux</code>. To preserve the order of sources, use the <code>concat</code> operator.</p>
+
+<h2>Backpressure</h2>
+
+<p>Backpressure is a feedback mechanism allowing a <code>Subscriber</code> to signal how much data it can process, controlling the <code>Publisher</code>'s data emission rate. This is managed at the <code>Subscription</code> level.</p>
+
+<h2>Error Handling</h2>
+
+<p>Recover from errors using <code>onErrorReturn</code>. Handle checked exceptions with a <code>try-catch</code> block, transforming them into <code>RuntimeException</code>.</p>
+
+<h2>Integration with RxJava and CompletableFuture</h2>
+
+<p>Reactor can interoperate with RxJava and <code>CompletableFuture</code> using conversion methods that start with <code>from</code> (to Reactor) and <code>to</code> (from Reactor).</p>
+
+<h2>Reactive to Blocking</h2>
+
+<p>To block until a value is available, use <code>Mono#block()</code>. This should be avoided in the middle of reactive code to prevent locking the pipeline.</p>
+
+<h2>Reference Documentation</h2>
+
+<p>For further reference, please consider the following sections:</p>
+
+<ul>
+    <li><a href="https://maven.apache.org/guides/index.html">Official Apache Maven documentation</a></li>
+    <li><a href="https://docs.spring.io/spring-boot/docs/3.3.1/maven-plugin/reference/html/">Spring Boot Maven Plugin Reference Guide</a></li>
+    <li><a href="https://docs.spring.io/spring-boot/docs/3.3.1/maven-plugin/reference/html/#build-image">Create an OCI image</a></li>
+    <li><a href="https://docs.spring.io/spring-boot/docs/3.3.1/reference/htmlsingle/index.html#web.reactive">Spring Reactive Web</a></li>
+</ul>
+
+<p>This project was created using Spring Initializr.</p>
+
+</body>
+</html>
