@@ -6,4 +6,5 @@ before_install:
 	- docker build -t alessiottavo/docker-reactor -f Dockerfile.dev .
 	
 script:
-	- docker run -e CI=true alessiottavo/docker-reactor ./mvnw clean install
+	script:
+	  - docker run -e CI=true alessiottavo/docker-reactor mvn clean install
