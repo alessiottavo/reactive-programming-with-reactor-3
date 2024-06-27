@@ -7,4 +7,4 @@ before_install:
 	
 script:
 	script:
-	  - docker run -e CI=true alessiottavo/docker-reactor mvn clean install
+	  - docker run alessiottavo/docker-reactor mvn clean install
