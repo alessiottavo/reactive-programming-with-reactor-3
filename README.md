@@ -1,3 +1,6 @@
+
+[![Build Result](https://github.com/alessiottavo/reactive-programming-with-reactor-3/actions/workflows/maven.yml/badge.svg)](https://github.com/alessiottavo/reactive-programming-with-reactor-3/actions/workflows/maven.yml)
+
 # Reactive Programming Using Reactor 3
 
 These exercises have been created following the official documentation from [projectreactor.io](https://projectreactor.io/).
